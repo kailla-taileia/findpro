@@ -33,7 +33,9 @@ if($method === "POST" && str_ends_with($uri, "login_user")){
     
 }
 
-if($method === "POST" &&  $array_uri[1] === "service_request"){
+
+//criar um pedido
+if($method === "POST" &&  $array_uri[1] === "service_request" && !isset($array_uri[2])){
     require_once __DIR__ . "/functions/services/service_request.php";
     require_once __DIR__ . "/config/auth.php";
 
@@ -41,6 +43,22 @@ if($method === "POST" &&  $array_uri[1] === "service_request"){
     $user_id = validate_token($secret_key);
     ordem_request($conn, $user_id);
 }
+
+
+//mandar um review de serviço
+if($method === "POST" 
+    &&  $array_uri[1] === "service_request"
+    &&  $array_uri[2] === "review"){
+    require_once __DIR__ . "/functions/services/review.php";
+    require_once __DIR__ . "/config/auth.php";
+
+    //valida o token
+    $user_id = validate_token($secret_key);
+    review_request($conn, $user_id);
+}
+
+
+
 
 
 //listagem de todos os profissionais
@@ -70,26 +88,8 @@ if ($method === "GET" && isset($array_uri[2]) && $array_uri[1] === "professional
 
     require_once __DIR__ . "/functions/professionals/professionals.php";
     $id = $array_uri[2];
-    $professional = get_professional_by_id($conn, $id);
-
-
-    //se o id não pretence a nenhum profissional ....
-    if(!$professional){
-        http_response_code(404);
-
-        echo json_encode([
-            "message" => "Professional não encontrado!"
-        ]);
-
-        exit;
-    }
-
-
-    http_response_code(200);
-    echo json_encode(
-        $professional,
-        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-    );
+    
+    get_professional_by_id($conn, $id);
 
 }
 

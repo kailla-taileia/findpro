@@ -48,18 +48,21 @@ function get_professionals($conn){
 
 //buscar profissional pelo ID
 function get_professional_by_id($conn, $id){
-    $sql = "SELECT
+
+    header('Content-Type: application/json; charset=utf-8');
+ //buscar o profissional
+   $sql = "SELECT
         users.first_name,
         users.last_name,
-        professionals.user_id ,
-        professionals.id as professional_id,
+        professionals.user_id,
+        professionals.id AS professional_id,
         professionals.bio,
         professionals.hourly_rate,
         professionals.service_rate,
         professionals.pricing_type
     FROM users
     INNER JOIN professionals
-    ON professionals.user_id = users.id
+        ON professionals.user_id = users.id
     WHERE users.user_type = 'professional'
     AND professionals.id = :id";
 
@@ -67,7 +70,89 @@ function get_professional_by_id($conn, $id){
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $professional = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!$professional){
+        http_response_code(500);
+
+
+        echo json_encode([
+        "error" => "Profissional não identificado!"
+        ]);
+
+        exit;
+    }
+
+    //média de avaliação
+    $sql_rating = "SELECT
+        AVG(rating) AS average_rating
+        FROM service_reviews
+        WHERE professional_id = :professional_id";
+
+    $stmt_rating = $conn->prepare($sql_rating);
+
+    $stmt_rating->bindParam(
+        ":professional_id",
+        $id,
+        PDO::PARAM_INT
+    );
+
+    $stmt_rating->execute();
+
+    $rating = $stmt_rating->fetch(PDO::FETCH_ASSOC);
+
+
+
+
+
+    //pegando os dados de reviews
+    $sql_reviews = "SELECT
+        rating,
+        comment,
+        DATE_FORMAT(created_at, '%d/%m/%Y') AS created_at
+        FROM service_reviews
+        WHERE professional_id = :professional_id
+        ORDER BY created_at DESC
+    ";
+
+    $stmt_reviews = $conn->prepare($sql_reviews);
+
+    $stmt_reviews->bindParam(
+        ":professional_id",
+        $id,
+        PDO::PARAM_INT
+    );
+
+    $stmt_reviews->execute();
+
+    $reviews = $stmt_reviews->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$reviews) {
+        $professional["reviews_message"] = "Nenhuma avaliação registrada!";
+    } else {
+        $professional["reviews_message"] = null;
+    }
+
+
+    //informação completa
+
+   
+    if ($rating["average_rating"] === null) {
+        $professional["average_rating"] = 0;
+    } else {
+        $professional["average_rating"] = number_format(
+            $rating["average_rating"],
+            1
+        );
+    }
+
+    $professional["reviews"] = $reviews;
+
+
+
+    echo json_encode($professional);
+    return;
+
 }
 
 
