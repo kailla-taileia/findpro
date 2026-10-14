@@ -1,0 +1,99 @@
+/* 
+   NAVBAR
+ */
+
+.navbar {
+    width: 100%;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 8%;
+
+    background-color: var(--background);
+
+    border-bottom: 1px solid var(--border);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+/* Logo */
+
+.logo a {
+    text-decoration: none;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+
+/* Links */
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+}
+
+.nav-links a {
+    text-decoration: none;
+
+    color: var(--text-secondary);
+
+    font-size: 15px;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+
+/* Botões */
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-login,
+.btn-register {
+    text-decoration: none;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.btn-login {
+    color: var(--primary);
+}
+
+.btn-login:hover {
+    background-color: var(--background-light);
+}
+
+.btn-register {
+    background-color: var(--primary);
+    color: var(--text-on-primary);
+}
+
+.btn-register:hover {
+    background-color: var(--primary-hover);
+}

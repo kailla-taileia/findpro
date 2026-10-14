@@ -21,9 +21,11 @@ function create_professional($conn,$user_id){
 }
 
 
+
 //listagem de todos os profissionais
 function get_professionals($conn){
     $sql = "SELECT
+        professionals.id,
         users.first_name,
         users.last_name,
         professionals.bio,
@@ -59,10 +61,13 @@ function get_professional_by_id($conn, $id){
         professionals.bio,
         professionals.hourly_rate,
         professionals.service_rate,
-        professionals.pricing_type
+        professionals.pricing_type,
+        service_categories.service
     FROM users
     INNER JOIN professionals
-        ON professionals.user_id = users.id
+    ON professionals.user_id = users.id
+    LEFT JOIN service_categories
+    ON professionals.service_category_id = service_categories.id
     WHERE users.user_type = 'professional'
     AND professionals.id = :id";
 
@@ -105,7 +110,7 @@ function get_professional_by_id($conn, $id){
 
 
 
-    //pegando os dados de reviews
+    //Dados de reviews
     $sql_reviews = "SELECT
         rating,
         comment,

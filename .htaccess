@@ -1,4 +1,8 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !/index\.php$
-RewriteRule ^.*$ index.php [QSA,L]
+# Não mexer em arquivos/pastas que realmente existem
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Enviar todas as rotas da API para o backend
+RewriteRule ^(.+)$ backend/index.php [QSA,L]

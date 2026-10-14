@@ -5,12 +5,10 @@
     //função de gerar token
     function generate_token($user_id, $secret_key){
 
-        //definir oque tem no token
+        //definir o token
         $payload = [
             "id" => $user_id,
-            //quando o token foi criado
             "iat" => time(),
-            //o token é válido por 24hrs
             "exp" => time() + (24*60*60)
         ];
 
@@ -22,11 +20,8 @@
 
         //assinatura
         $signature = hash_hmac(
-            //algoritmo utilizado
             "sha256",
-            //oque quero proteger
             $payload_encoded,
-            //é a chave que solo o servidor conhece
             $secret_key
         );
 
@@ -38,14 +33,11 @@
 
     function validate_token($secret_key){
 
-        // Pegando os headers enviados pelo cliente
         $headers = getallheaders();
 
-        // Pegando o header Authorization
         $authorization = $headers["Authorization"] ?? '';
 
 
-        // Verificar se o cliente enviou o Authorization
         if($authorization === ''){
             http_response_code(401);
 
@@ -57,7 +49,6 @@
         }
 
 
-        // Verificar se começa com Bearer
         if (!str_starts_with($authorization, "Bearer ")) {
             http_response_code(401);
 
@@ -99,7 +90,6 @@
 
 
         //comparando as assinaturas
-        //Isso protege contra alguém alterar o token.
         if (!hash_equals($expected_signature, $signature)) {
             http_response_code(401);
 
@@ -117,7 +107,6 @@
 
 
         //verifcar a expiração
-        //A data de expiração já passou?
         if($payload["exp"] < time()){
             http_response_code(401);
 

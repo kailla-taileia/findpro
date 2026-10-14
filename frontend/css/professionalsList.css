@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+/* 
+   PROFESSIONALS
+ */
+
+main{
+    flex: 1;
+    background-color: var(--primary-background);
+}
+
+.professionals-section {
+    padding: 60px 8%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+.section-header h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    color: var(--text-on-secundary);
+}
+
+
+/* 
+   SEARCH
+ */
+
+.search-box {
+    display: flex;
+    gap: 8px;
+}
+
+.search-box input {
+    width: 260px;
+    padding: 12px 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    outline: none;
+    font-size: 14px;
+}
+
+.search-box input:focus {
+    border-color: var(--primary);
+}
+
+.search-box button {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: var(--primary);
+    color: var(--text-on-primary);
+
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background: var(--primary-hover);
+}
+
+
+/* 
+   GRID
+ */
+
+.professionals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+
+/* 
+   CARD
+ */
+
+.professional-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--background-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 25px;
+
+    transition: 0.2s;
+    
+}
+
+.professional-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px var(--shadow);
+}
+
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+
+.profile-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-service {
+    margin-top: 4px;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+.profile-bio {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* 
+   PRICE
+ */
+
+.price {
+    padding-top: 15px;
+    border-top: 1px solid var(--border-primary);
+
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.price strong {
+    color: var(--text-primary);
+    font-size: 18px;
+}
+
+
+/* 
+   BUTTON
+ */
+
+.profile-button {
+    display: block;
+    cursor: pointer;
+
+    margin-top: auto;
+
+    width: 100%;
+    padding: 11px;
+
+    text-align: center;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    background: var(--primary);
+    color: var(--text-on-primary);
+
+    font-size: 14px;
+}
+
+.profile-button:hover {
+    background: var(--primary-hover);
+}
+
+
+/* 
+   LOADING
+ */
+
+.loading {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 50px;
+
+    color: var(--text-on-secundary);
+}
+
+
+/* 
+   RESPONSIVE
+ */
+
+@media (max-width: 900px) {
+
+    .professionals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .navbar nav {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .professionals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+}

@@ -27,8 +27,6 @@
         }
 
 
-
-        //não deixando ir sem informações
         $data = json_decode(file_get_contents("php://input"), true);
 
         if($data === null){
@@ -44,7 +42,6 @@
         }
 
         //informações que podem enviar
-
         $required_fields = [
             "service_request_id",
             "rating",
@@ -83,7 +80,7 @@
 
 
 
-        //saber se ja avaliou esse serviço
+        //verificação para não avaliar mais que uma vez
         $stmt = $conn->prepare("
             SELECT id
             FROM service_reviews
@@ -109,7 +106,7 @@
         }
 
 
-        //saber se a tarefa pertence ao client e se o id é de um pedido existente
+        //Tarefa pertence ao client e se o id é de um pedido existente
 
         $stmt = $conn->prepare("
             SELECT id, professional_id
@@ -136,7 +133,7 @@
         }
 
 
-        //saber se a avaliação é de 1 a 5
+        //verificação de valor de avaliação
 
         if(!is_int($rating) || $rating < 1 || $rating > 5){
             http_response_code(400);

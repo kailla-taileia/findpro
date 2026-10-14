@@ -29,7 +29,6 @@
 
         $data = json_decode(file_get_contents("php://input"), true);
 
-        //verificar se não é null
 
         if($data === null){
             http_response_code(400);
@@ -53,7 +52,7 @@
             "status"
         ];
 
-        //saber se todos os campos obrigtórios foi enviado
+        //Verificação de campos obrigtórios
         foreach($required_fields as $field){
                 if(!array_key_exists($field, $data)){
                     http_response_code(400);
@@ -86,7 +85,7 @@
         }
 
  
-        //parte para saber se a tarefa pertence ao profissional e se o id é de um pedido existente
+        //Tarefa pertence ao profissional e se o id é de um pedido existente
         $stmt = $conn->prepare("
             SELECT id
             FROM professionals

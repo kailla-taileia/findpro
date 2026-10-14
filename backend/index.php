@@ -2,10 +2,16 @@
 <?php
 
 require_once __DIR__  . "/config/connection.php";
-//php -S localhost:8000 index.php;
-//require_once __DIR__ . "/users.php";
 
 
+header("Access-Control-Allow-Origin: http://127.0.0.1:5500");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    http_response_code(204);
+    exit;
+}
 
 $method = $_SERVER["REQUEST_METHOD"];
 $protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off" )
@@ -35,20 +41,22 @@ if($method === "POST" && str_ends_with($uri, "login_user")){
 
 
 //criar um pedido
-if($method === "POST" &&  $array_uri[1] === "service_request" && !isset($array_uri[2])){
-    require_once __DIR__ . "/functions/services/service_request.php";
-    require_once __DIR__ . "/config/auth.php";
+if($method === "POST" &&  $array_uri[1] === "service_request"){
 
-    //valida o token
-    $user_id = validate_token($secret_key);
-    ordem_request($conn, $user_id);
+    if(!isset($array_uri[2])){
+        require_once __DIR__ . "/functions/services/service_request.php";
+        require_once __DIR__ . "/config/auth.php";
+
+        //valida o token
+        $user_id = validate_token($secret_key);
+        ordem_request($conn, $user_id);
+    }
+    
 }
 
 
 //mandar um review de serviço
-if($method === "POST" 
-    &&  $array_uri[1] === "service_request"
-    &&  $array_uri[2] === "review"){
+if($method === "POST" &&  $array_uri[1] === "review"){
     require_once __DIR__ . "/functions/services/review.php";
     require_once __DIR__ . "/config/auth.php";
 
@@ -62,7 +70,7 @@ if($method === "POST"
 
 
 //listagem de todos os profissionais
-if($method === "GET" &&  str_ends_with($uri, "professionals.php")){
+if($method === "GET" &&  str_ends_with($uri, "professionals")){
     require_once __DIR__ . "/functions/professionals/professionals.php";
     $professionals = get_professionals($conn);
 
@@ -84,7 +92,7 @@ if($method === "GET" &&  str_ends_with($uri, "professionals.php")){
 
 
 //listagem de profissional de acordo com o ID
-if ($method === "GET" && isset($array_uri[2]) && $array_uri[1] === "professional.php") {
+if ($method === "GET" && isset($array_uri[2]) && $array_uri[1] === "professional") {
 
     require_once __DIR__ . "/functions/professionals/professionals.php";
     $id = $array_uri[2];
@@ -122,7 +130,7 @@ if($method === "GET" && $array_uri[1] === "service_request" && $array_uri[2] ===
 
 
 //Edição de usuário
-if ($method === "PATCH" && $array_uri[1] === "profissional_edit"){
+if ($method === "PATCH" && $array_uri[1] === "edit"){
 
     require_once __DIR__ . "/functions/users/users.php";
     require_once __DIR__ . "/config/auth.php";

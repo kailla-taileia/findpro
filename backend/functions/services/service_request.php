@@ -26,10 +26,8 @@
             exit;
         }
 
-        //Lê o corpo da requisição (JSON enviado pelo cliente) e transforma em array PHP.
         $data = json_decode(file_get_contents("php://input"), true);
     
-        //verificando se data não é null
         if ($data === null) {
                 http_response_code(400);
                 echo json_encode(["error" => "JSON inválido"]);
@@ -158,7 +156,7 @@
         }
 
 
-        //pegar o id client
+
         $stmt = $conn->prepare("
             SELECT id
             FROM clients

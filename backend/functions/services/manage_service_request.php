@@ -118,7 +118,7 @@
 
 
 
-        //saber se tem relação com o pedido
+        //verificação de relação com o pedido
         $stmt = $conn->prepare("
             SELECT id, client_id, professional_id, status
             from service_requests

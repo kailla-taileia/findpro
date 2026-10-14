@@ -1,0 +1,457 @@
+
+/* =========================
+   ESTRUTURA GERAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--primary-background);
+    color: var(--text-primary);
+}
+
+/* =========================
+   CABEÇALHO
+========================= */
+.navbar {
+    height: 70px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--background);
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.logo span,
+footer span {
+    color: var(--primary);
+}
+
+.navbar nav {
+    display: flex;
+    gap: 30px;
+}
+
+.navbar nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar nav a:hover,
+.navbar nav a.active {
+    color: var(--primary);
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-btn,
+.register-btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.login-btn {
+    color: var(--primary);
+}
+
+.register-btn {
+    color: var(--text-on-primary);
+    background: var(--primary);
+}
+
+.register-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* =========================
+   CONTEÚDO PRINCIPAL
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+
+    flex: 1;
+}
+
+.loading,
+.error-message {
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    background: var(--background-light);
+}
+
+.error-message {
+    color: var(--error-color);
+}
+
+/* =========================
+   CABEÇALHO DO PERFIL
+========================= */
+
+#professional-profile{
+    display: none;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    padding: 30px;
+    margin-bottom: 30px;
+
+    background: var(--secondary-background);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--text-on-primary);
+
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.profile-main-info {
+    min-width: 0;
+}
+
+.profile-category {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+
+    border-radius: 20px;
+    background: var(--accent-background);
+    color: var(--primary);
+
+    font-size: 13px;
+}
+
+.profile-main-info h1 {
+    margin-bottom: 12px;
+    font-size: 30px;
+    overflow-wrap: anywhere;
+}
+
+.profile-rating {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+
+    font-size: 14px;
+}
+
+.rating-star {
+    color: var(--rating-color);
+    font-size: 20px;
+}
+
+#review-count {
+    color: var(--text-muted);
+}
+
+/* =========================
+   LAYOUT DO PERFIL
+========================= */
+
+.profile-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 30px;
+    align-items: start;
+}
+
+.profile-details {
+    min-width: 0;
+}
+
+.profile-section {
+    margin-bottom: 30px;
+    padding: 25px;
+
+    background: var(--secondary-background);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+
+.profile-section h2,
+.contact-card h2 {
+    margin-bottom: 18px;
+    font-size: 20px;
+}
+
+.profile-section > p {
+    line-height: 1.8;
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+}
+
+/* =========================
+   PREÇOS
+========================= */
+
+.price-card {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--primary-background);
+}
+
+.price-label {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.price-info strong {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+/* =========================
+   AVALIAÇÕES
+========================= */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.reviews-list > p {
+    margin: 0;
+}
+
+.reviews-list .rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #f59e0b;
+
+    margin-bottom: -8px;
+}
+
+.reviews-list .rating::before {
+    content: "★";
+    font-size: 18px;
+}
+
+/* Comentário */
+.reviews-list .comment {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-color, #374151);
+
+    overflow-wrap: anywhere;
+}
+
+/* Data da avaliação */
+.reviews-list .create-date {
+    font-size: 12px;
+    color: var(--text-secondary, #9ca3af);
+    margin-top: -8px;
+}
+
+.empty-reviews {
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+
+
+/* =========================
+   BARRA LATERAL
+========================= */
+
+.profile-sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+.contact-card {
+    padding: 25px;
+
+    background: var(--secondary-background);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+
+.contact-card > p {
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.sidebar-price {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 18px 0;
+    margin-bottom: 18px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-price span {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.sidebar-price strong {
+    font-size: 24px;
+}
+
+.request-button {
+    width: 100%;
+    padding: 14px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--primary);
+    color: var(--text-on-primary);
+
+    font-weight: bold;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.request-button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.login-notice {
+    margin-top: 15px;
+    font-size: 12px !important;
+    text-align: center;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        position: static;
+    }
+
+    .price-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar {
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        font-size: 13px;
+    }
+
+    .profile-header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-avatar {
+        width: 85px;
+        height: 85px;
+        font-size: 28px;
+    }
+
+    .profile-main-info h1 {
+        font-size: 24px;
+    }
+
+    .profile-section,
+    .contact-card {
+        padding: 20px;
+    }
+
+    .review-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

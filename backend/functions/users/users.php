@@ -2,8 +2,6 @@
 
 function create_user($conn){
 
-         //file_get_contents("php://input") >> pega exatamente esse JSON como texto.
-        //json_decode($json, true) >> Transforme o JSON em um array associativo.
         $data = json_decode(file_get_contents("php://input"), true);
 
 
@@ -16,7 +14,6 @@ function create_user($conn){
         $clave = $data["password"];
         $password = password_hash($clave, PASSWORD_DEFAULT);
 
-        //verificação para não ir inf inválido
 
         if ($user_type !== "client" && $user_type !== "professional" && $user_type === "") {
                 echo json_encode([
@@ -33,18 +30,15 @@ function create_user($conn){
 
 
 
-        //código mysql para add
 
         $sql = "INSERT INTO users
                 (first_name, last_name, email, password, user_type, phone)
                 VALUES
                 (:first_name, :last_name, :email, :password, :user_type, :phone )";
 
-        //preparar uma consulta SQL para ser executada no banco de dados.
         $stmt = $conn->prepare($sql);
 
 
-        //Pegue os valores que eu estou fornecendo e coloque nos parâmetros correspondentes do SQL.
         $stmt -> execute([
                 ":first_name" => $first_name,
                 ":last_name" => $last_name,
@@ -54,7 +48,7 @@ function create_user($conn){
                 ":phone" => $phone
         ]);
 
-        //verificação de tipo de usuário
+       
 
         if($user_type === "client"){
                 require_once __DIR__ . "/../../functions/clients/clients.php";
@@ -88,14 +82,14 @@ function login_user($conn){
         $data = json_decode(file_get_contents("php://input"), true);
         
 
-        //se não mandar nenhuma informação
+        
         if(!$data){
                 http_response_code(400);
                 echo json_encode(["error" => "Nenhum dado enviado!"]);
                 exit;
         }
 
-        //se não tiver email ou senha não se pode fazer o login
+        
         if(!isset($data['email']) || !isset($data["password"])){
                 http_response_code(400);
                 echo json_encode([
@@ -113,7 +107,6 @@ function login_user($conn){
         $sql = "SELECT * FROM users WHERE email = :email";
 
         try {
-                //prepara a consulta
                 $stmt = $conn->prepare($sql);
 
                 $stmt->bindValue(":email", $email);
@@ -185,11 +178,8 @@ function update_users($conn, $user_id){
 
         header('Content-Type: application/json; charset=utf-8');
 
-        //Lê o corpo da requisição (JSON enviado pelo cliente) e transforma em array PHP.
         $data = json_decode(file_get_contents("php://input"), true);
     
-        //verificando se data não é null
-
         if ($data === null) {
                 http_response_code(400);
                 echo json_encode(["error" => "JSON inválido"]);
@@ -203,7 +193,6 @@ function update_users($conn, $user_id){
         }
 
 
-        //para receber as mensagens
         $response_messages[] = [];
 
 
@@ -222,22 +211,54 @@ function update_users($conn, $user_id){
                 }
         }
 
+
+
         //informações da tabela profissional
         $allowed_professional_fields = [
                         "service_category_id",
                         "bio",
-                        "hourly_rate",
-                        "service_rate",
                         "pricing_type"
         ];
 
         $data_professional_to_update = [];
+
+
+        //tipo de serviço
+
+        if(!isset($data["pricing_type"])){
+
+                http_response_code(400);
+                echo json_encode(["error" => "O campo pricing_type é obrigatório"]);
+                exit;
+
+        }
+        
+        if($data["pricing_type"] === "hourly"){
+                $allowed_professional_fields[] = "hourly_rate";
+        }
+        
+        if($data["pricing_type"] === "fixed"){
+               $allowed_professional_fields[] = "service_rate"; 
+        }
+
+        if ($data["pricing_type"] !== "hourly" && $data["pricing_type"] !== "fixed") {
+
+                http_response_code(400);
+
+                echo json_encode([
+                        "error" => "pricing_type deve ser 'hourly' ou 'fixed'"
+                ]);
+
+                exit;
+        }
 
         foreach ($allowed_professional_fields as $field) {
                 if(array_key_exists($field, $data)){
                         $data_professional_to_update[$field] = $data[$field];
                 }
         }
+
+        
 
 
         if(empty($data_to_update) && empty($data_professional_to_update)){
@@ -247,18 +268,14 @@ function update_users($conn, $user_id){
         }
 
 
-        //atualizar campos de user só se tiver campos de users
-
         if(!empty($data_to_update)){
-                //hashear la contraseña
+
                 if(isset($data_to_update["password"])){
                         $data_to_update["password"] = password_hash(
                         $data_to_update["password"], PASSWORD_DEFAULT);
                 }
 
 
-
-                //Atualizar users usando o user_id encontrado
                 $set_parts = [];
                 foreach($data_to_update as $field => $value){
                         $set_parts[] = "$field = :$field";
@@ -297,8 +314,6 @@ function update_users($conn, $user_id){
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-        //Se $user existir, pegue user_type.Se não existir, coloque null.
         $user_type = $user ? $user["user_type"] : null;
 
         //se for profissional e tivers campos enviados dessa tabela atualiza
@@ -342,7 +357,6 @@ function update_users($conn, $user_id){
                 }
 
 
-                //caminho sql para atualizar os dados profissional
                 $sql = "UPDATE professionals SET " 
                 . implode(", ", $set_parts) 
                 . " WHERE user_id = :user_id";
@@ -390,7 +404,7 @@ function perfil_user($conn, $user_id){
 
         header('Content-Type: application/json; charset=utf-8');
 
-        //descobrir o tipo de user
+        //tipo de user
         $stmt = $conn->prepare("SELECT user_type FROM users WHERE id = :id");
         $stmt->bindValue(":id", $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -406,7 +420,6 @@ function perfil_user($conn, $user_id){
                 return;
         }
 
-        //Se $user existir, pegue user_type.Se não existir, coloque null.
         $user_type = $user["user_type"];
 
         //se for profissional
@@ -449,6 +462,8 @@ function perfil_user($conn, $user_id){
                 return;
         }
 
+
+        //se for cliente
         if($user_type === "client"){
                 $sql = "SELECT
                         first_name,

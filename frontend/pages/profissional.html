@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profissionais | FindPro</title>
+
+    <link rel="stylesheet" href="/frontend/css/root.css">
+    <link rel="stylesheet" href="/frontend/css/navbar.css">
+    <link rel="stylesheet" href="/frontend/css/footer.css">
+    <link rel="stylesheet" href="/frontend/css/professionalsList.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="/frontend/index.html">Find<span>Pro</span></a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="/frontend/index.html#inicio">Início</a>
+            <a href="professionals.html" class="active">Profissionais</a>
+            <a href="#">Serviços</a>
+            <a href="#">Sobre nós</a>
+        </nav>
+
+        <div class="nav-buttons">
+            <a href="pages/login.html" class="btn-login">Entrar</a>
+            <a href="pages/register.html" class="btn-register">Criar conta</a>
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="professionals-section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Profissionais disponíveis</h2>
+                    <p>Confira alguns dos profissionais cadastrados no FindPro.</p>
+                </div>
+
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Buscar profissional..."
+                    >
+
+                    <button id="searchButton">
+                        Buscar
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div id="professionalsContainer" class="professionals-grid">
+
+
+                <div class="loading">
+                    Carregando profissionais...
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+            Find<span>Pro</span>
+        </div>
+
+        <p>
+            Conectando clientes e profissionais.
+        </p>
+
+        <p class="copyright">
+            © 2026 FindPro. Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <script type="module" src="../javascript/functions_professionals.js"></script>
+
+</body>
+
+</html>

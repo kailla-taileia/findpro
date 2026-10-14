@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil do Profissional | FindPro</title>
+
+    <link rel="stylesheet" href="/frontend/css/root.css">
+    <link rel="stylesheet" href="/frontend/css/navbar.css">
+    <link rel="stylesheet" href="/frontend/css/footer.css">
+    <link rel="stylesheet" href="../css/professional_id.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="/frontend/index.html">Find<span>Pro</span></a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="/frontend/index.html#inicio">Início</a>
+            <a href="/frontend/pages/profissional.html">Profissionais</a>
+        </nav>
+
+        <div class="nav-buttons">
+            <a href="pages/login.html" class="btn-login">Entrar</a>
+            <a href="pages/register.html" class="btn-register">Criar conta</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        
+        <div id="loading" class="loading">
+            Carregando perfil do profissional...
+        </div>
+
+        
+        <div id="error-message" class="error-message hidden">
+            Não foi possível carregar o perfil do profissional.
+        </div>
+
+        
+        <section id="professional-profile" class="profile hidden">
+
+            
+            <div class="profile-header">
+
+                <div class="profile-avatar" id="profile-avatar">
+                    <span id="avatar-initials">?</span>
+                </div>
+
+                <div class="profile-main-info">
+                    <span class="profile-category" id="service-category">
+                        Categoria
+                    </span>
+
+                    <h1 id="professional-name">Nome do profissional</h1>
+
+                    <div class="profile-rating">
+                        <span class="rating-star">★</span>
+                        <strong id="average-rating">0,0</strong>
+                        <span id="review-count">(0 avaliações)</span>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="profile-content">
+
+                
+                <div class="profile-details">
+
+                    <section class="profile-section">
+                        <h2>Sobre o profissional</h2>
+
+                        <p id="professional-bio">
+                            Nenhuma apresentação informada.
+                        </p>
+                    </section>
+
+                    <section class="profile-section">
+                        <h2>Serviços e preços</h2>
+
+                        <div class="price-card">
+
+                            <div class="price-info">
+                                <span class="price-label">
+                                    Tipo de cobrança
+                                </span>
+
+                                <strong id="pricing-type">
+                                    Por hora
+                                </strong>
+                            </div>
+
+
+                            <div class="price-info">
+                                <span class="price-label text-info-price">
+                                    Valor por serviço
+                                </span>
+
+                                <strong class="service-price">
+                                    Não informado
+                                </strong>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    
+                    <section class="profile-section">
+                        <div class="section-heading">
+                            <h2>Avaliações dos clientes</h2>
+                        </div>
+
+                        <div id="reviews-list" class="reviews-list">
+                            <p class="empty-reviews">
+                                Este profissional ainda não possui avaliações.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                
+                <aside class="profile-sidebar">
+
+                    <div class="contact-card">
+                        <h2>Contrate este profissional</h2>
+
+                        <p>
+                            Precisa deste serviço? Envie uma solicitação
+                            diretamente pelo FindPro.
+                        </p>
+
+                        <div class="sidebar-price">
+                            <span class="text-info-price"> Valor por serviço </span>
+                            <strong id="sidebar-hourly-rate" class="service-price">
+                                Não informado
+                            </strong>
+                        </div>
+
+                        <button
+                            type="button"
+                            id="request-service-btn"
+                            class="request-button"
+                        >
+                            Solicitar serviço
+                        </button>
+
+                        <p class="login-notice">
+                            É necessário estar logado para solicitar um serviço.
+                        </p>
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+            Find<span>Pro</span>
+        </div>
+
+        <p>
+            Conectando clientes e profissionais.
+        </p>
+
+        <p class="copyright">
+            © 2026 FindPro. Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <script type="module" src="../javascript/professional_id.js"></script>
+
+</body>
+</html>

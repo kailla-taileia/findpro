@@ -1,0 +1,49 @@
+:root {
+
+    /*BACKGROUNDS*/
+
+    --background: #eaf1fc;
+    --primary-background: #faf9ff;
+    --background-light: #fafafa;
+    --background-dark: #171717;
+
+    --primary: #6699FF;
+    --primary-hover: #537dd0;
+    --primary-light: #f8f7ff;
+
+
+    /*CORES DE TEXTO */
+
+    --text-primary: #171717;
+    --text-secondary: #555555;
+    --text-muted: #666666;
+    --text-light: #777777;
+
+/*TEXTO SOBRE FUNDO BUTTONS*/
+
+    --text-on-primary: #ffffff;
+    --text-on-secundary: #858585;
+
+
+
+    /*BORDAS*/
+
+    --border: #e1ebfb;
+    --border-light: #8db8fd;
+    --border-primary: #d9daff;
+
+
+    
+
+
+    /*FOOTER*/
+
+    --footer-text: #ffffff;
+    --footer-muted: #aaaaaa;
+
+
+    /*SOMBRAS*/
+
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-primary: rgba(124, 58, 237, 0.10);
+}
